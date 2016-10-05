@@ -1,0 +1,3 @@
+Dimmer kitchen_ceiling_light_dimmer { channel="hue:0000:000000000000:0:brightness" }
+Switch kitchen_esp8266_switch { mqtt="<[broker:esp8266_switch_1/change:command:default]" }
+String kitchen_esp8266_display { mqtt=">[broker:esp8266_switch_1/display:command:*:default]" }

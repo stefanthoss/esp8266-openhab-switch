@@ -1,0 +1,13 @@
+rule "ESP8266 Switch"
+when
+    Item kitchen_esp8266_switch received command
+then
+    if(receivedCommand == ON && kitchen_ceiling_light_dimmer.state == 0) {
+        sendCommand(kitchen_ceiling_light_dimmer, 100)
+        kitchen_esp8266_display.sendCommand("Kitchen light on.")
+    }
+    if(receivedCommand == OFF && kitchen_ceiling_light_dimmer.state > 0) {
+        sendCommand(kitchen_ceiling_light_dimmer, 0)
+        kitchen_esp8266_display.sendCommand("Kitchen light off.")
+    }
+end
