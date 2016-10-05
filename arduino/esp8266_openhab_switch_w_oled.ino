@@ -33,8 +33,11 @@ Adafruit_SSD1306 display = Adafruit_SSD1306();
  #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
+// WiFi settings
 const char* ssid        = "wifi-ssid";
 const char* password    = "wifi-password";
+
+// MQTT settings
 const char* mqtt_server = "x.x.x.x";
 const char* client_id   = "esp8266_switch_1";
 
