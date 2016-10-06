@@ -17,6 +17,8 @@ The OLED display is used to show network information and confirmation of the com
 
 Flash the [Arduino sketch](arduino/esp8266_openhab_switch_w_oled.ino) to the board. Don't forget to adjust the Wi-Fi and MQTT settings at the beginning of the sketch. The sketch requires that the ESP8266 drivers are installed and the Adafruit libraries for the Feather board and the OLED board are loaded in the Arduino IDE.
 
+Detailed instructions on how to use Adafruit's ESP8266 Feather board with the Arduino IDE can be found here: https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/using-arduino-ide
+
 # openHAB Setup
 
 ## MQTT Server
@@ -38,4 +40,3 @@ After that the MQTT binding can be installed via the Paper UI. There's also a go
 In addition to the Hue light *kitchen_ceiling_light_dimmer*, two items are defined in the item file [items/all.items](openhab2/items/all.items): A switch that represents the ESP8266 switch and a string to send a message to the ESP8266 OLED display.
 
 The rule file [rules/esp8266_switch.rules](openhab2/rules/esp8266_switch.rules) defines the switch behavior. When the ON button is pressed and the light is off, it turns on the light and sends a confirmation to the ESP8266 board. The board then displays the confirmation message for a short time.
-
