@@ -55,13 +55,13 @@ void setup() {
   pinMode(BUTTON_B, INPUT_PULLUP);
   pinMode(BUTTON_C, INPUT_PULLUP);
 
-  display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setRotation(0); // Rotate the display text
 
   // Show screen for connecting to WiFi
   display.clearDisplay();
   display.setCursor(0,0);
+  display.setTextSize(1);
   display.println("Connecting to");
   display.println("WiFi network");
   display.println(ssid);
@@ -95,18 +95,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // Show callback screen with message received via MQTT
   display.clearDisplay();
   display.setCursor(0,0);
+  display.setTextSize(4);
   for (int i = 0; i < length; i++) {
     display.print((char)payload[i]);
   }
   display.display();
-
-  delay(2000);
-  show_info();
 }
 
 void reconnect() {
   display.clearDisplay();
   display.setCursor(0,0);
+  display.setTextSize(1);
   display.println("Connecting to");
   display.println("MQTT server");
   display.println(mqtt_server);
@@ -124,6 +123,7 @@ void reconnect() {
       display.display();
     }
   }
+  show_info();
 }
  
 void loop() {
@@ -133,15 +133,21 @@ void loop() {
   }
   client.loop();
 
-  // Button for turning the light on
+  // Button for setting the light to 100%
   if(!digitalRead(BUTTON_A)) {
-    client.publish("esp8266_switch_1/change", "ON");
+    client.publish("esp8266_switch_1/change", "100");
     delay(500);
   }
 
-  // Button for turning the light off
+  // Button for setting the light to 50%
+  if(!digitalRead(BUTTON_B)) {
+    client.publish("esp8266_switch_1/change", "50");
+    delay(500);
+  }
+
+  // Button for setting the light to 0%
   if(!digitalRead(BUTTON_C)) {
-    client.publish("esp8266_switch_1/change", "OFF");
+    client.publish("esp8266_switch_1/change", "0");
     delay(500);
   }
 }

@@ -37,6 +37,6 @@ After that the MQTT binding can be installed via the Paper UI. There's also a go
 
 ## Items & Rules
 
-In addition to the Hue light *kitchen_ceiling_light_dimmer*, two items are defined in the item file [items/all.items](openhab2/items/all.items): A switch that represents the ESP8266 switch and a string to send a message to the ESP8266 OLED display.
+In addition to the Hue light *kitchen_ceiling_light_dimmer*, two items are defined in the item file [items/all.items](openhab2/items/all.items): A dimmer that represents the ESP8266 board and a string to send a message to the ESP8266 OLED display, both connected to MQTT.
 
-The rule file [rules/esp8266_switch.rules](openhab2/rules/esp8266_switch.rules) defines the switch behavior. When the ON button is pressed and the light is off, it turns on the light and sends a confirmation to the ESP8266 board. The board then displays the confirmation message for a short time.
+The rule file [rules/esp8266_switch.rules](openhab2/rules/esp8266_switch.rules) defines the dimmer behavior. The ESP8266 board sends values 100, 50, and 0 with the buttons A, B, and C via MQTT. The rule *Kitchen Switch* sets the Hue light state to the value that the board sent. The rule *Kitchen Switch Display* sends a string with the Hue light state to the board so it can be displayed. What's cool here is that this string gets sent whenever the light state is changed, even through another UI (e.g. the Android app).

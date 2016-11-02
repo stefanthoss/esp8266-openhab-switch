@@ -1,25 +1,13 @@
 rule "Kitchen Switch"
 when
-    Item kitchen_esp8266_switch received command
+    Item kitchen_esp8266_dimmer received command
 then
-    if(receivedCommand == ON && kitchen_ceiling_light_dimmer.state == 0) {
-        sendCommand(kitchen_ceiling_light_dimmer, 100)
-    }
-    if(receivedCommand == OFF && kitchen_ceiling_light_dimmer.state > 0) {
-        sendCommand(kitchen_ceiling_light_dimmer, 0)
-    }
+    sendCommand(kitchen_ceiling_light_dimmer, receivedCommand)
 end
 
-rule "Kitchen Switch On Display"
+rule "Kitchen Switch Display"
 when
-    Item kitchen_ceiling_light_dimmer changed from 0
+    Item kitchen_ceiling_light_dimmer received update
 then
-    kitchen_esp8266_display.sendCommand("Kitchen light on.")
-end
-
-rule "Kitchen Switch Off Display"
-when
-    Item kitchen_ceiling_light_dimmer changed to 0
-then
-    kitchen_esp8266_display.sendCommand("Kitchen light off.")
+    kitchen_esp8266_display.sendCommand(String::format("%4s%%", kitchen_ceiling_light_dimmer.state))
 end
